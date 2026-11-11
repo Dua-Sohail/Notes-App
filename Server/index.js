@@ -6,7 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const noteRoute = require('./Routes/noteRoutes');
 const errorHandler = require('./Middleware/errorHandler');
-
+const authRoutes = require('./Routes/authRoutes');
 const app = express();
 app.use(cors());
 
@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/notes', noteRoute);
+app.use('/api/auth', authRoutes);
 app.use(errorHandler);
 
 mongoose
