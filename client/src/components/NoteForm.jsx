@@ -3,22 +3,30 @@ import { useState } from "react";
 function NoteForm({ onAdd }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:5000/api/notes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, content }),
-    });
+    try {
+      const res = await fetch("http://localhost:5000/api/notes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, content }),
+      });
+      const data = await res.json();
 
-    const newNote = await res.json();
+      if (!res.ok) {
+        setError(data.message);
+        return;
+      }
 
-    if (res.ok) {
-      onAdd(newNote);
+      onAdd(data);
       setTitle("");
       setContent("");
+      setError("");
+    } catch {
+      setError("Could not reach the server.");
     }
   };
 
@@ -36,6 +44,7 @@ function NoteForm({ onAdd }) {
         onChange={(e) => setContent(e.target.value)}
       />
       <button type="submit">Add note</button>
+      {error && <p>{error}</p>}
     </form>
   );
 }
