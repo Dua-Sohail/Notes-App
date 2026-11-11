@@ -15,12 +15,28 @@ function App() {
     setNotes((prev) => [newNote, ...prev]);
   };
 
+  const deleteNote = async (id) => {
+    const res = await fetch(`http://localhost:5000/api/notes/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      setNotes((prev) => prev.filter((note) => note._id !== id));
+    }
+  };
+
   return (
     <div>
       <h1>Notes App</h1>
       <NoteForm onAdd={addNote} />
       {notes.map((note) => (
-        <NoteCard key={note._id} title={note.title} content={note.content} />
+        <NoteCard
+          key={note._id}
+          id={note._id}
+          title={note.title}
+          content={note.content}
+          onDelete={deleteNote}
+        />
       ))}
     </div>
   );
