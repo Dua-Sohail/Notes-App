@@ -31,7 +31,7 @@ function NoteForm({ onAdd }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="note-form" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Title"
@@ -39,12 +39,14 @@ function NoteForm({ onAdd }) {
         onChange={(e) => setTitle(e.target.value)}
       />
       <textarea
-        placeholder="Content"
+        placeholder="Write your note..."
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <button type="submit">Add note</button>
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
+      <button className="btn btn-primary" type="submit">
+        Add note
+      </button>
     </form>
   );
 }

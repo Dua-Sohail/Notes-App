@@ -29,7 +29,7 @@ function NoteCard({ id, title, content, onDelete, onUpdate }) {
 
   if (isEditing) {
     return (
-      <div>
+      <div className="note-card">
         <input
           type="text"
           value={editTitle}
@@ -39,19 +39,31 @@ function NoteCard({ id, title, content, onDelete, onUpdate }) {
           value={editContent}
           onChange={(e) => setEditContent(e.target.value)}
         />
-        {error && <p>{error}</p>}
-        <button onClick={handleSave}>Save</button>
-        <button onClick={handleCancel}>Cancel</button>
+        {error && <p className="error">{error}</p>}
+        <div className="note-actions">
+          <button className="btn btn-primary" onClick={handleSave}>
+            Save
+          </button>
+          <button className="btn btn-ghost" onClick={handleCancel}>
+            Cancel
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="note-card">
       <h3>{title}</h3>
       <p>{content}</p>
-      <button onClick={() => setIsEditing(true)}>Edit</button>
-      <button onClick={() => onDelete(id)}>Delete</button>
+      <div className="note-actions">
+        <button className="btn btn-ghost" onClick={() => setIsEditing(true)}>
+          Edit
+        </button>
+        <button className="btn btn-danger" onClick={() => onDelete(id)}>
+          Delete
+        </button>
+      </div>
     </div>
   );
 }

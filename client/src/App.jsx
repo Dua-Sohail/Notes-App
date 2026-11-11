@@ -31,7 +31,6 @@ function App() {
     }
   };
 
-  // returns null on success, or an error message on failure
   const updateNote = async (id, updates) => {
     const res = await fetch(`${API}/${id}`, {
       method: "PUT",
@@ -47,13 +46,15 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="app">
       <h1>Notes App</h1>
       <NoteForm onAdd={addNote} />
 
-      {loading && <p>Loading notes...</p>}
-      {error && <p>{error}</p>}
-      {!loading && !error && notes.length === 0 && <p>No notes yet.</p>}
+      {loading && <p className="status">Loading notes...</p>}
+      {error && <p className="error">{error}</p>}
+      {!loading && !error && notes.length === 0 && (
+        <p className="status">No notes yet. Add your first one above.</p>
+      )}
 
       {notes.map((note) => (
         <NoteCard
